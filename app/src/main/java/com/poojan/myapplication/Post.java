@@ -8,24 +8,44 @@ import android.widget.BaseAdapter;
  * Created by VNurtureTechnologies on 07/02/17.
  */
 
-public class Post extends BaseAdapter {
-    @Override
-    public int getCount() {
-        return 0;
+public class Post  {
+
+
+    int userId,id;
+
+    public String getBody() {
+        return body;
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
+    public String getTitle() {
+        return title;
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+    public void setTitle(String title) {
+        this.title = title;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    String title,body;
+
+
 }
