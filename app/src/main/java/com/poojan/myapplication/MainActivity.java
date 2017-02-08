@@ -2,10 +2,18 @@ package com.poojan.myapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -612,28 +620,82 @@ public class MainActivity extends AppCompatActivity {
             "  }\n" +
             "]";
 
+    int userId,id;
+    String title,body;
+
+    ListView listView;
+
+    CustomAdapter customAdapter;
+
+
+
+    ArrayList<Post> postArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        listView = (ListView) findViewById(R.id.list_view);
+
+        parsingJson();
+
     }
 
+    /*ArrayList<HashMap<String,Integer>> postHashMapArrayListInteger = new ArrayList<>();
+    ArrayList<Map<String,String>> postHashMapArrayListString = new ArrayList<>();*/
+
     public void parsingJson(){
+
+
+        postArrayList = new ArrayList<>();
 
         try {
             JSONArray rootArray = new JSONArray(stringJson);
 
             for (int i = 0; i <rootArray.length() ; i++) {
+                Post post = new Post();
                 JSONObject postObject = rootArray.getJSONObject(i);
-                postObject.getString("userId");
-                postObject.getString("id");
-                postObject.getString("title");
-                postObject.getString("body");
+                 userId = postObject.getInt("userId");
+                Log.d("tag", "parsingJson: "+userId);
+                 id = postObject.getInt("id");
+                Log.d("tag", "parsingJson: "+id);
+                 title = postObject.getString("title");
+                Log.d("tag", "parsingJson: "+title);
+                 body  = postObject.getString("body");
+                Log.d("tag", "parsingJson: "+body);
+
+                post.setUserId(userId);
+                post.setId(id);
+                post.setTitle(title);
+                post.setBody(body);
+                postArrayList.add(post);
             }
+
+            customAdapter = new CustomAdapter(this,postArrayList);
+
+
+
+            listView.setAdapter(customAdapter);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+
     }
+
+    /*private HashMap<String, Integer>detailsInteger(String name,int number){
+        HashMap<String, Integer> integerDetails = new HashMap<String, Integer>();
+        integerDetails.put(name, number);
+        return integerDetails;
+    }
+
+    private HashMap<String, String>detailsString(String name,String word){
+        HashMap<String, String> stringDetails = new HashMap<String, String>();
+        stringDetails.put(name, word);
+        return stringDetails;
+    }*/
 }
